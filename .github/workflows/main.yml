@@ -47,4 +47,4 @@ jobs:
           git config --global user.name "HaRsH020772"
           git add abc
           git commit -m "Add image digest file"
-          git push origin master
+          git push origin main
