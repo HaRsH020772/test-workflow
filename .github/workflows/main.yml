@@ -40,11 +40,4 @@ jobs:
         run: |
           git clone https://github.com/HaRsH020772/sample-node-app.git
           
-      - name: Commit and Push Image Digest File
-        run: |
-          touch abc
-          git config --global user.email "panchalharsh0207@gmail.com"
-          git config --global user.name "HaRsH020772"
-          git add abc
-          git commit -m "Add image digest file"
-          git push origin main
+
