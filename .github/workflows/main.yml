@@ -1,0 +1,50 @@
+name: Docker Publish
+
+on:
+  push:
+    branches:
+      - master  
+
+env:
+  DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_ACCESS_TOKEN: ${{secrets.DOCKER_ACCESS_TOKEN}}
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          
+      - name: Build and tag Docker image
+        run: docker build . -t ${{env.DOCKER_USERNAME}}/sample-node-app:latest
+
+      - name: Push Docker image to Docker Hub
+        run: docker push ${{env.DOCKER_USERNAME}}/sample-node-app:latest
+
+      - name: Capture Image Digest
+        id: digest
+        run: |
+          DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
+          echo "Image Digest: $DIGEST" > $GITHUB_WORKSPACE/image_digest.txt
+          cat $GITHUB_WORKSPACE/image_digest.txt
+          
+      - name: Clone
+        run: |
+          git clone https://github.com/HaRsH020772/sample-node-app.git
+          
+      - name: Commit and Push Image Digest File
+        run: |
+          touch abc
+          git config --global user.email "panchalharsh0207@gmail.com"
+          git config --global user.name "HaRsH020772"
+          git add abc
+          git commit -m "Add image digest file"
+          git push origin master
