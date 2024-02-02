@@ -3,7 +3,7 @@ name: Docker Publish
 on:
   push:
     branches:
-      - main  
+      - main
 
 env:
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
