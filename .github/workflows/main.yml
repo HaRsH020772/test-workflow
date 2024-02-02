@@ -42,15 +42,10 @@ jobs:
           
       - name: Commit and Push Image Digest File
         run: |
-          
           touch abc
           git config --global user.email "panchalharsh0207@gmail.com"
           git config --global user.name "HaRsH020772"
           git add abc
           git commit -m "Add image digest file"
-          
-      - name: Push Changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GIT_TOKEN }}
+          git push https://harshalpatel2810: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@github.com/HaRsH020772/test-workflow.git main
           
